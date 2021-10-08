@@ -35,7 +35,7 @@ $(document).ready(function () {
         data: "lastTransaction",
         name: "lastTransaction",
         render: function (data, type, row) {
-          return '<p>' + row.LastTransaction.date + '</p> ';
+          return '<p>' + row.LastTransaction + '</p> ';
         },
         visible: true
       }

@@ -43,17 +43,22 @@ class DBSQL
    private static function initConnection()
    {
 
-      $serverName = "LAPTOP-JTI57GQK\SQLEXPRESS"; //serverName\instanceName
+      $serverName = "dbkodigo.cnuhw09y2hfd.us-east-2.rds.amazonaws.com"; //serverName\instanceName
 
       // Since UID and PWD are not specified in the $connectionInfo array,
       // The connection will be attempted using Windows Authentication.
-      $connectionInfo = array("Database" => "inventory", "UID" => "test", "PWD" => "test");
+      $connectionInfo = array("Database" => "inventory", "UID" => "webuser", "PWD" => "webUser123@");
+
+    
 
 
       $db = self::getInstance();
+
+      $conn = new PDO( "sqlsrv:server=$serverName ; Database=inventory", "webuser", "webUser123@");  
+      $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION ); 
     
 
-      $db->dbConn = sqlsrv_connect($serverName, $connectionInfo);
+      $db->dbConn = $conn;
    
       return $db;
    }
@@ -76,19 +81,19 @@ class DBSQL
    {
 
       if (empty($sql)) return false;
+      //$params = array($_POST['query']);
 
       $conn = $this->getDbConn();
-      $results = sqlsrv_query($conn, $sql);
+      $results = $conn->prepare($sql);  
+      $results->execute(); 
+      $results = $results->fetchAll(PDO::FETCH_ASSOC);
+     
 
       if ((!$results) or (empty($results))) {
          return false;
       }
-      $count = 0;
-      $data = array();
-      while ($row = sqlsrv_fetch_array($results)) {
-         $data[$count] = $row;
-         $count++;
-      }
-      return $data;
+   
+      return $results;
    }
 }
+

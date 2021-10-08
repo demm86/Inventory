@@ -1,6 +1,6 @@
 <?php
 
-require("DbSql.inc.php");
+require("DbSql.inc.sql.php");
 
 Class SiteSQL extends DBSQL
 {
