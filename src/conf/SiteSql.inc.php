@@ -24,6 +24,13 @@ Class SiteSQL extends DBSQL
    }  
 
 
+   function getProductList()
+   {      
+      $sql = "EXEC ProductList";
+      $result = $this->select($sql);      
+      return $result;
+   }  
+
    function getProductBoxDetails($ProductId)
    {      
       $sql = "EXEC ProductBoxDetails $ProductId";
