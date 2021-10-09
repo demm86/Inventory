@@ -2,7 +2,7 @@
      <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
          <!-- Sidebar - Brand -->
-         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
              <div class="sidebar-brand-icon rotate-n-15">
                  <i class="fas fa-laugh-wink"></i>
              </div>
@@ -13,9 +13,14 @@
          <hr class="sidebar-divider my-0">
          <!-- Nav Item - Tables -->
          <li class="nav-item active">
-             <a class="nav-link" href="tables.html">
+             <a class="nav-link" href="BoxList.php">
                  <i class="fas fa-fw fa-table"></i>
-                 <span>Tables</span></a>
+                 <span>Boxes</span></a>
+         </li>
+         <li class="nav-item active">
+             <a class="nav-link" href="ProductList.php">
+                 <i class="fas fa-fw fa-table"></i>
+                 <span>Products</span></a>
          </li>
 
          <!-- Divider -->

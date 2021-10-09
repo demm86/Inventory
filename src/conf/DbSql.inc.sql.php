@@ -63,11 +63,10 @@ class DBSQL
       if ((!$results) or (empty($results))) {
          return false;
       }
-      $count = 0;
+   
       $data = array();
-      while ($row = sqlsrv_fetch_array($results)) {
-         $data[$count] = $row;
-         $count++;
+      while ($row = sqlsrv_fetch_object($results)) {
+         array_push($data,$row);
       }
       return $data;
    }
