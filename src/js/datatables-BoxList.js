@@ -166,7 +166,7 @@ function LoadBoxDeails(BoxId, ProductId) {
         data: "Quantity",
         name: "Quantity",
         render: function (data, type, row) {
-          return '<p class="quantity-text"><a class="table-link-documents-data">' + row.Quantity +' ('+(row.InOut ? "+":"-") +')</a></p>';
+          return '<p class="quantity-text"><a class="table-link-documents-data">' + row.Quantity +' ('+(row.InOut ==1 || row.InOut ==true ? "+":"-") +')</a></p>';
         },
         visible: true
       },

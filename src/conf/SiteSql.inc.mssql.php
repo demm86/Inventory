@@ -1,6 +1,6 @@
 <?php
 
-require("DbSql.inc.mysql.php");
+require("DbSql.inc.sql.php");
 
 Class SiteSQL extends DBSQL
 {
@@ -11,14 +11,14 @@ Class SiteSQL extends DBSQL
   	
  	function getBoxList()
    {      
-      $sql = "Call Inventory.BoxList";
+      $sql = "EXEC BoxList";
       $result = $this->select($sql);      
       return $result;
    }  
 
    function getBoxProductDetails($BoxId,$ProductId)
    {      
-      $sql = "Call Inventory.BoxProductDetails($BoxId, $ProductId)";
+      $sql = "EXEC BoxProductDetails $BoxId, $ProductId";
       $result = $this->select($sql);      
       return $result;
    }  
@@ -26,14 +26,14 @@ Class SiteSQL extends DBSQL
 
    function getProductList()
    {      
-      $sql = "Call Inventory.ProductList();";
+      $sql = "EXEC ProductList";
       $result = $this->select($sql);      
       return $result;
    }  
 
    function getProductBoxDetails($ProductId)
    {      
-      $sql = "Call Inventory.ProductBoxDetails($ProductId);";
+      $sql = "EXEC ProductBoxDetails $ProductId";
       $result = $this->select($sql);      
       return $result;
    }  
