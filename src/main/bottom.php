@@ -67,6 +67,15 @@
     <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
     <script src="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.4.0/js/fabric.min.js"></script>
 
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="js/productDetailsPanel.js"></script>
+    <script src="js/boxDetailsPanel.js"></script>
+    <script src="js/searchHome.js"></script>
+
+
+
+
+
 </body>
 
 </html>

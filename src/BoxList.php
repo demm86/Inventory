@@ -11,14 +11,15 @@ include("main/top.php");
             <i class="ms-Panel-closeIcon ms-Icon ms-Icon--Cancel"></i>
         </button>
         <div class="ms-Panel-contentInner">
-            <p class="ms-Panel-headerText">Extra large panel</p>
+            <p class="ms-Panel-headerText">Product Transacions - Box Code(<span id="BoxCodeTitle"></span>) </p>
+            <hr></hr>
             <div class="ms-Panel-content">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTableBoxListDetails" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>ProductId</th>
-                                <th>ProductCode</th>
+                                <th>Product Code</th>
                                 <th>Last Transaction</th>
                                 <th class="quantity-text">Quantity</th>
                                 <th>Description</th>
@@ -28,7 +29,7 @@ include("main/top.php");
                         <tfoot>
                             <tr>
                                 <th>ProductId</th>
-                                <th>ProductCode</th>
+                                <th>Product Code</th>
                                 <th>Last Transaction</th>
                                 <th class="quantity-text">Quantity</th>
                                 <th>Description</th>

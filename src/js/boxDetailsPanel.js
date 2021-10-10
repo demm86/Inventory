@@ -1,24 +1,31 @@
 
+var PanelBoxDetailsHome;
 
-var PanelProductDetails;
 
 $(document).ready(function () {
+  PanelBoxDetailsHome = document.querySelector("#PanelBoxDetailsHome");
+});
 
-  PanelProductDetails = document.querySelector("#PanelProductDetails");
 
-  vrMainTable = $('#dataTableProducts').DataTable({
+function LoadBoxDeailsPanelHome(BoxId, BoxCode) {
+  PanelBoxtDetailsTmpHome = new fabric['Panel'](PanelBoxDetailsHome);
+  $("#BoxCodeProductTitleHome").html(BoxCode);
+
+  vrMainTableDetails = $('#dataTableBoxListDetailsPanelHome').DataTable({
     mark: true,
+    destroy: true,
     ajax: {
-      url: "api/productList.php", dataSrc: ""
+      url: "api/boxListDetails.php?BoxId=" + BoxId + "&ProductId=-1",
+      dataSrc: ""
     },
     dom: 'Bfrtip',
     buttons: [
       {
         extend: 'pdf',
         footer: true,
-        title: 'Product Details',
+        title: 'Transactions by box  (' + BoxCode + ')',
         exportOptions: {
-          columns: [1, 2, 3]
+          columns: [0, 1, 2, 3]
         },
         customize: function (doc) {
           doc.pageMargins = [30, 30, 10, 20];
@@ -63,27 +70,22 @@ $(document).ready(function () {
       {
         extend: 'csv',
         footer: false,
+        title: 'Transactions by box  (' + BoxCode + ')',
         exportOptions: {
-          columns: [1, 2, 3]
-        }
+          columns: [0, 1, 2, 3]
+        },
       },
       {
         extend: 'excel',
         footer: false,
+        title: 'Transactions by box  (' + BoxCode + ')',
         exportOptions: {
-          columns: [1, 2, 3]
-        }
+          columns: [0, 1, 2, 3]
+        },
       }
     ],
     columns: [
-      {
-        data: "ProductId",
-        name: "ProductId",
-        render: function (data, type, row) {
-          return '<p>' + row.ProductId + '</p> ';
-        },
-        visible: false
-      },
+
       {
         data: "ProductCode",
         name: "ProductCode",
@@ -91,40 +93,40 @@ $(document).ready(function () {
           return '<p>' + row.ProductCode + '</p> ';
         },
         visible: true
-      }, {
-        data: "LastTransaction",
-        name: "LastTransaction",
+      }
+      , {
+        data: "lastTransaction",
+        name: "lastTransaction",
         render: function (data, type, row) {
-          return '<p>' + row.LastTransaction + '</p> ';
-        },
-        visible: true
-      }, {
-        data: "Quantity",
-        name: "Quantity",
-        render: function (data, type, row) {
-          return '<p style="text-align:right;"><a class="table-link-documents-data">' + row.Quantity + '</a></p>';
+          return '<p>' + moment(row.TransactionDate).format('YYYY-MM-DD HH:MM:SS') + '</p> ';
         },
         visible: true
       }
-
-
-
+      , {
+        data: "Quantity",
+        name: "Quantity",
+        render: function (data, type, row) {
+          return '<p class="quantity-text">' + row.Quantity + ' (' + (row.InOut == 1 || row.InOut == true ? "+" : "-") + ')</p>';
+        },
+        visible: true
+      },
+      {
+        data: "TransactionDescription",
+        name: "TransactionDescription",
+        render: function (data, type, row) {
+          return '<p>' + row.TransactionDescription + '</p>';
+        },
+        visible: true
+      }
 
     ]
 
   });
 
 
-  $('#dataTableProducts tbody').on('click', '.table-link-documents-data', function () {
-    var row = vrMainTable.row($(this).parents('tr')).data();
-    $("#transactions-by-box-panel").hide()
-    $("#ProductCodeTitle").html(row["ProductCode"]);
-    LoadProductDeailsPanel(row["ProductId"], row["ProductCode"]);
-  });
 
 
-
-});
+}
 
 
 

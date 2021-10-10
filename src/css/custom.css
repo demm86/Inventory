@@ -9,3 +9,21 @@
 tr.shown td.details-control {
     background: url('../img/details_close.png') no-repeat center center;
 }
+
+.table-link-documents-data{
+
+  cursor: pointer !important;
+}
+
+.termsListDiv {
+  position: absolute;
+  z-index: 1;
+  background: #f8f9fc;
+  padding: 1em;
+  width: 24%;
+}
+
+.pointer-link{
+  cursor: pointer !important;
+
+}

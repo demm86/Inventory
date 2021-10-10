@@ -5,42 +5,28 @@ include("main/top.php");
 ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
+    <!-- Content Row -->
+    <div class="row">
 
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800"></h1>
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>BoxId</th>
-                            <th>BoxCode</th>
-                            <th>ProductId</th>
-                            <th>ProductCode</th>
-                            <th>Quantity</th>
-                            <th>lastTransaction</th>
+        <div class="col-xl-12 col-lg-12">
 
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                        <th>BoxId</th>
-                            <th>BoxCode</th>
-                            <th>ProductId</th>
-                            <th>ProductCode</th>
-                            <th>Quantity</th>
-                            <th>lastTransaction</th>
-                        </tr>
-                    </tfoot>
-                </table>
+            <!-- Bar Chart -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Product Stocks</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-bar">
+                        <canvas id="myBarChart"></canvas>
+                    </div>
+                   
+                </div>
             </div>
+
         </div>
+
     </div>
+
 
 </div>
 
@@ -52,6 +38,4 @@ include("main/bottom.php");
 
 ?>
 
-<!-- Page level custom scripts -->
-<script src="js/datatables-BoxList.js"></script>
-<!-- /.container-fluid -->
+<script src="js/demo/chart-bar-demo.js"></script>

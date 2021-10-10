@@ -1,23 +1,32 @@
 
+var PanelProductDetails;
 
-var PanelBoxDetails;
 
 $(document).ready(function () {
+  PanelProductDetails = document.querySelector("#PanelProductDetails");
+});
 
-  PanelBoxDetails = document.querySelector("#PanelBoxDetails");
-  vrMainTable = $('#dataTableBoxList').DataTable({
+
+function LoadProductDeailsPanel(ProductId, ProducCode) {
+
+  PanelProductDetailsTmp = new fabric['Panel'](PanelProductDetails);
+  $("#ProductCodeTitle").html(ProducCode);
+  $("#transactions-by-box-panel").hide();
+  vrMainTableProductDetails = $('#dataTableProductListDetails').DataTable({
     mark: true,
+    destroy: true,
     ajax: {
-      url: "api/boxList.php", dataSrc: ""
+      url: "api/productListDetails.php?ProductId=" + ProductId,
+      dataSrc: ""
     },
     dom: 'Bfrtip',
     buttons: [
       {
         extend: 'pdf',
-        title: 'Box Details',
         footer: true,
+        title: 'Stock by box - Product (' + ProducCode + ')',
         exportOptions: {
-          columns: [1, 3, 4, 5]
+          columns: [0, 1, 2]
         },
         customize: function (doc) {
           doc.pageMargins = [30, 30, 10, 20];
@@ -58,37 +67,25 @@ $(document).ready(function () {
           // Inject the object in the document
           doc.content[1].layout = objLayout;
         }
-
-
-
       },
       {
         extend: 'csv',
-        title: 'Box Details',
         footer: false,
+        title: 'Stock by box - Product (' + ProducCode + ')',
         exportOptions: {
-          columns: [1, 3, 4, 5]
-        }
+          columns: [0, 1, 2]
+        },
       },
       {
         extend: 'excel',
-        title: 'Box Details',
         footer: false,
+        title: 'Stock by box - Product (' + ProducCode + ')',
         exportOptions: {
-          columns: [1, 3, 4, 5]
-        }
+          columns: [0, 1, 2]
+        },
       }
     ],
     columns: [
-
-      {
-        data: "BoxId",
-        name: "BoxId",
-        render: function (data, type, row) {
-          return '<p>' + row.BoxId + '</p> ';
-        },
-        visible: false
-      },
 
       {
         data: "BoxCode",
@@ -98,24 +95,10 @@ $(document).ready(function () {
         },
         visible: true
       },
+
       {
-        data: "ProductId",
-        name: "ProductId",
-        render: function (data, type, row) {
-          return '<p>' + row.ProductId + '</p> ';
-        },
-        visible: false
-      },
-      {
-        data: "ProductCode",
-        name: "ProductCode",
-        render: function (data, type, row) {
-          return '<p>' + row.ProductCode + '</p> ';
-        },
-        visible: true
-      }, {
-        data: "lastTransaction",
-        name: "lastTransaction",
+        data: "LastTransaction",
+        name: "LastTransaction",
         render: function (data, type, row) {
           return '<p>' + moment(row.LastTransaction.date).format('YYYY-MM-DD HH:MM:SS') + '</p> ';
         },
@@ -125,32 +108,42 @@ $(document).ready(function () {
         data: "Quantity",
         name: "Quantity",
         render: function (data, type, row) {
-          return '<p style="text-align:right;"><a class="table-link-documents-data">' + row.Quantity + '</a></p>';
+          return '<p class="quantity-text table-link-documents-data">' + row.Quantity + '</p>';
         },
         visible: true
+      }, {
+        "className": 'details-control',
+        "orderable": false,
+        "data": null,
+        "defaultContent": ''
       }
-
-
-
-
     ]
 
   });
 
-  $('#dataTableBoxList tbody').on('click', '.table-link-documents-data', function () {
-    var row = vrMainTable.row($(this).parents('tr')).data();
-    $("#BoxCodeTitle").html(row["BoxCode"]);
-    LoadBoxDeails(row["BoxId"], row["ProductId"],row["BoxCode"]);
+
+  $('#dataTableProductListDetails tbody').on('click', 'td.details-control', function () {
+
+    var tr = $(this).closest('tr');
+    var row = vrMainTableProductDetails.row(tr);
+
+    //console.log(row.data()["BoxId"]+'-'+row.data()["ProductId"]);
+
+    $("#BoxCodeProductTitle").html(row.data()["BoxCode"]);
+    LoadBoxDeailsPanel(row.data()["BoxId"], row.data()["ProductId"], row.data()["BoxCode"])
+
   });
 
 
-});
+
+}
 
 
-function LoadBoxDeails(BoxId, ProductId, BoxCode) {
-  PanelBoxDetailsTmp = new fabric['Panel'](PanelBoxDetails);
+function LoadBoxDeailsPanel(BoxId, ProductId, BoxCode) {
 
-  vrMainTableDetails = $('#dataTableBoxListDetails').DataTable({
+  $("#transactions-by-box-panel").show()
+
+  vrMainTableDetails = $('#dataTableBoxListDetailsPanel').DataTable({
     mark: true,
     destroy: true,
     ajax: {
@@ -162,11 +155,10 @@ function LoadBoxDeails(BoxId, ProductId, BoxCode) {
       {
         extend: 'pdf',
         footer: true,
-        title: 'Product Transacions - Box Code('+BoxCode+')',
+        title: 'Transactions by box  (' + BoxCode + ')',
         exportOptions: {
-          columns: [1, 2,3, 4]
+          columns: [0, 1, 2, 3]
         },
-        
         customize: function (doc) {
           doc.pageMargins = [30, 30, 10, 20];
           doc.defaultStyle.fontSize = 11;
@@ -210,31 +202,22 @@ function LoadBoxDeails(BoxId, ProductId, BoxCode) {
       {
         extend: 'csv',
         footer: false,
-        title: 'Product Transacions - Box Code('+BoxCode+')',
+        title: 'Transactions by box  (' + BoxCode + ')',
         exportOptions: {
-          columns: [1, 2,3, 4]
+          columns: [0, 1, 2, 3]
         },
       },
       {
         extend: 'excel',
         footer: false,
-        title: 'Product Transacions - Box Code('+BoxCode+')',
+        title: 'Transactions by box  (' + BoxCode + ')',
         exportOptions: {
-          columns: [1, 2,3, 4]
+          columns: [0, 1, 2, 3]
         },
       }
     ],
     columns: [
 
-
-      {
-        data: "ProductId",
-        name: "ProductId",
-        render: function (data, type, row) {
-          return '<p>' + row.ProductId + '</p> ';
-        },
-        visible: false
-      },
       {
         data: "ProductCode",
         name: "ProductCode",
@@ -247,7 +230,7 @@ function LoadBoxDeails(BoxId, ProductId, BoxCode) {
         data: "lastTransaction",
         name: "lastTransaction",
         render: function (data, type, row) {
-          return '<p>' + moment(row.TransactionDate.date).format('YYYY-MM-DD HH:MM:SS') + '</p> ';
+          return '<p>' + moment(row.TransactionDate).format('YYYY-MM-DD HH:MM:SS') + '</p> ';
         },
         visible: true
       }
@@ -276,10 +259,6 @@ function LoadBoxDeails(BoxId, ProductId, BoxCode) {
 
 
 }
-
-
-
-
 
 
 

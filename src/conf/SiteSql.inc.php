@@ -37,6 +37,15 @@ Class SiteSQL extends DBSQL
       $result = $this->select($sql);      
       return $result;
    }  
+
+   function getSearch($query)
+   {      
+
+      $sql = "Call Inventory.searchProducts('$query');";
+      $result = $this->select($sql);      
+      return $result;
+   }  
+      
       
 }
 
